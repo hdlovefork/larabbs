@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,15 @@ $api->version('v1', [
             ->name('api.users.store');
         // 图片验证码
         $api->post('captchas', 'CaptchasController@store')
+            ->name('api.captchas.store');
+        $api->post('test', function (){
+            $code = '001nOaM02lq1nZ0qF1N021ZTL02nOaMT';
+            $driver = Socialite::driver('weixin');
+            $response = $driver->getAccessTokenResponse($code);
+            $driver->setOpenId($response['openid']);
+            $oauthUser = $driver->userFromToken($response['access_token']);
+            dd($oauthUser);
+        })
             ->name('api.captchas.store');
     });
 
