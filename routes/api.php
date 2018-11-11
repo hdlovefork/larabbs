@@ -22,7 +22,7 @@ $api->version('v1', [
     $api->group([
         'middleware' => 'api.throttle',
         'limit' => config('api.rate_limits.access.limit'),
-        'expires' => config('api.rete_limits.access.expires'),
+        'expires' => config('api.rate_limits.access.expires'),
     ], function ($api) {
         // 短信验证码
         $api->post('verificationCodes', 'VerificationCodesController@store')

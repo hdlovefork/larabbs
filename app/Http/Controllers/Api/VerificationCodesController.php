@@ -32,10 +32,10 @@ class VerificationCodesController extends Controller
             try {
                 $result = $easySms->send($phone, [
                     'data'=>[$code],
-                    'template'=>''
+                    'template'=>'357967'
                 ]);
             } catch (\Overtrue\EasySms\Exceptions\NoGatewayAvailableException $exception) {
-                $message = $exception->getException('yunpian')->getMessage();
+                $message = $exception->getException('yuntongxun')->getMessage();
                 return $this->response->errorInternal($message ?? '短信发送异常');
             }
         }
