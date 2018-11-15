@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\TopicRequest;
-use App\Http\Resources\TopicResource;
 use App\Models\Topic;
+use App\Models\User;
 use App\Transformers\TopicTransformer;
 use Illuminate\Http\Request;
 
@@ -20,7 +20,7 @@ class TopicsController extends Controller
             ->setStatusCode(201);
     }
 
-    public function update(TopicRequest $request,Topic $topic){
+    public function update(Topic $topic,TopicRequest $request){
         $this->authorize('update', $topic);
 
         $topic->update($request->all());
@@ -53,6 +53,16 @@ class TopicsController extends Controller
         }
 
         $topics = $query->paginate(20);
+        return $this->response->paginator($topics, new TopicTransformer());
+    }
+
+    public function show(Topic $topic){
+        return $this->response->item($topic,new TopicTransformer());
+    }
+
+    public function userIndex(User $user){
+        $topics = $user->topics()->recent()
+            ->paginate(20);
 
         return $this->response->paginator($topics, new TopicTransformer());
     }

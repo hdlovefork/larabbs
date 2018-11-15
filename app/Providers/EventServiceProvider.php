@@ -17,9 +17,10 @@ class EventServiceProvider extends ServiceProvider
             // add your listeners (aka providers) here
             'SocialiteProviders\Weixin\WeixinExtendSocialite@handle'
         ],
-        'Illuminate\Database\Events\QueryExecuted' => [
-            'App\Listeners\QueryListener',
-        ],
+//        SQL查询日志
+//        'Illuminate\Database\Events\QueryExecuted' => [
+//            'App\Listeners\QueryListener',
+//        ],
     ];
 
     /**

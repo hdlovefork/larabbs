@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,7 +50,12 @@ $api->version('v1', [
         // 话题列表
         $api->get('topics', 'TopicsController@index')
             ->name('api.topics.index');
-
+        // 某用户话题
+        $api->get('users/{user}/topics', 'TopicsController@userIndex')
+            ->name('api.users.topics.index');
+        // 展示话题
+        $api->get('topics/{topic}', 'TopicsController@show')
+            ->name('api.topics.show');
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
             // 当前登录用户信息
@@ -74,6 +76,7 @@ $api->version('v1', [
             // 删除话题
             $api->delete('topics/{topic}', 'TopicsController@destroy')
                 ->name('api.topics.destroy');
+
         });
     });
 
