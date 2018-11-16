@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +16,7 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
-    'middleware' => 'serializer:array'
+    'middleware' => ['serializer:array','bindings']
 ], function ($api) {
     $api->group([
         'middleware' => 'api.throttle',
@@ -50,7 +47,15 @@ $api->version('v1', [
         // 分类列表
         $api->get('categories', 'CategoriesController@index')
             ->name('api.categories.index');
-
+        // 话题列表
+        $api->get('topics', 'TopicsController@index')
+            ->name('api.topics.index');
+        // 某用户话题
+        $api->get('users/{user}/topics', 'TopicsController@userIndex')
+            ->name('api.users.topics.index');
+        // 展示话题
+        $api->get('topics/{topic}', 'TopicsController@show')
+            ->name('api.topics.show');
         // 需要 token 验证的接口
         $api->group(['middleware' => 'api.auth'], function($api) {
             // 当前登录用户信息
@@ -65,6 +70,13 @@ $api->version('v1', [
             // 发布话题
             $api->post('topics', 'TopicsController@store')
                 ->name('api.topics.store');
+            // 修改话题
+            $api->patch('topics/{topic}', 'TopicsController@update')
+                ->name('api.topics.update');
+            // 删除话题
+            $api->delete('topics/{topic}', 'TopicsController@destroy')
+                ->name('api.topics.destroy');
+
         });
     });
 
