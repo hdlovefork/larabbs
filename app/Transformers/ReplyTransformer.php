@@ -25,4 +25,14 @@ class ReplyTransformer extends TransformerAbstract
             'updated_at' => $reply->updated_at->toDateTimeString(),
         ];
     }
+
+    protected $availableIncludes=['user','topic'];
+
+    public function includeUser(Reply $reply){
+        return $this->item($reply->user,new UserTransformer());
+    }
+
+    public function includeTopic(Reply $reply){
+        return $this->item($reply->topic,new TopicTransformer());
+    }
 }

@@ -39,7 +39,7 @@ class TopicTransformer extends TransformerAbstract
         return $this->item($topic->user,new UserTransformer());
     }
 
-    public function includeCategory(Category $category){
+    public function includeCategory(Topic $topic){
         return $this->item($topic->category,new CategoryTransformer());
     }
 }
