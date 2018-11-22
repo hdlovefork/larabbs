@@ -9,12 +9,13 @@
 namespace App\Transformers;
 
 
+use App\Models\Topic;
 use App\Models\User;
 use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-    protected $availableIncludes=['roles'];
+    protected $availableIncludes=['roles','topics'];
 
     public function transform(User $user)
     {
@@ -35,5 +36,9 @@ class UserTransformer extends TransformerAbstract
     public function includeRoles(User $user)
     {
         return $this->collection($user->roles, new RoleTransformer());
+    }
+
+    public function includeTopics(User $user){
+        return $this->collection($user->topics,new TopicTransformer());
     }
 }
