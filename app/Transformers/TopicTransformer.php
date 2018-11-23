@@ -15,7 +15,7 @@ use League\Fractal\TransformerAbstract;
 
 class TopicTransformer extends TransformerAbstract
 {
-    protected $availableIncludes=['user','category'];
+    protected $availableIncludes=['user','category','replies'];
 
     public function transform(Topic $topic)
     {
@@ -41,5 +41,9 @@ class TopicTransformer extends TransformerAbstract
 
     public function includeCategory(Topic $topic){
         return $this->item($topic->category,new CategoryTransformer());
+    }
+
+    public function includeReplies(Topic $topic){
+        return $this->collection($topic->replies,new ReplyTransformer());
     }
 }
