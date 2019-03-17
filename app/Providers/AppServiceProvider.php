@@ -39,8 +39,5 @@ class AppServiceProvider extends ServiceProvider
         \API::error(function (\Illuminate\Auth\Access\AuthorizationException $exception) {
             abort(403, $exception->getMessage());
         });
-//        \API::error(function (ValidationException $exception){
-//            abort(422,$exception->validator->errors()->first());
-//        });
     }
 }

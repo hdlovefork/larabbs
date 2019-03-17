@@ -4,14 +4,14 @@ namespace App\Http\Requests\Api;
 
 use Dingo\Api\Http\FormRequest as BaseFormRequest;
 
-class FormRequest extends BaseFormRequest
+abstract class FormRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public final function authorize()
     {
         return true;
     }
@@ -21,10 +21,5 @@ class FormRequest extends BaseFormRequest
      *
      * @return array
      */
-    public function rules()
-    {
-        return [
-            //
-        ];
-    }
+    public  abstract function rules();
 }
